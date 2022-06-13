@@ -1,14 +1,11 @@
 import Head from "next/head";
-import Image from "next/image";
 
 import { PostCard, Categories, PostWidget } from "../components";
 
-const posts = [
-  { title: "Web development", excerpt: "Learn web development" },
-  { title: "Tailwind css", excerpt: "Learn Tailwind CSS" },
-];
+import { getPosts } from "../services";
 
-const Home = () => {
+export default function Home({ posts }) {
+  console.log(posts);
   return (
     <div className="container mx-auto mb-8 px-10">
       <Head>
@@ -18,7 +15,7 @@ const Home = () => {
       <div className="grid grid-cols-1 lg:gird-cols-12 gap-12">
         <div className="lg:col-span-8 col-span-1">
           {posts.map((post, index) => (
-            <PostCard post={post} key={post.title} />
+            <PostCard post={post.node} key={post.title} />
           ))}
         </div>
         <div className="lg:col-span-4 col-span-1">
@@ -30,6 +27,12 @@ const Home = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Home;
+export async function getStaticProps() {
+  const posts = (await getPosts()) || [];
+
+  return {
+    props: { posts },
+  };
+}
