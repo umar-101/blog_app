@@ -36,3 +36,17 @@ export async function getStaticProps() {
     props: { posts },
   };
 }
+
+const users = [
+  { name: "John", email: "john@exampdot com" },
+  { name: "umar", email: "umar@examp dot com" },
+];
+
+users.map((user) => {
+  return {
+    name: user.name,
+    email: user.email,
+    posts: user.posts,
+    users: user.users,
+  };
+}); //
